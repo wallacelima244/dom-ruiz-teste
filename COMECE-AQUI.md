@@ -1,3 +1,18 @@
+# CORREÇÃO GITHUB PAGES | DOM RUIZ 2.6
+
+## Para corrigir a tela branca SEM precisar atualizar 27 arquivos
+
+1. No repositório `dom-ruiz-teste`, abra a raiz e substitua apenas o arquivo `index.html` pelo deste ZIP.
+2. Confirme que o arquivo aparece exatamente como `index.html` na **raiz** (não dentro de outra pasta).
+3. Em **Settings > Pages**, escolha **Deploy from a branch > main > / (root)**, depois Save.
+4. Depois que o workflow do Pages concluir, abra `https://wallacelima244.github.io/dom-ruiz-teste/` com Ctrl+Shift+R.
+
+Este `index.html` contém o CSS, o JavaScript, a logo e as imagens principais internamente. Portanto, as fontes/cores/fotos funcionam mesmo se o CSS ou a pasta de imagens externa não forem encontrados. O vídeo ainda depende de `assets/video.baber.jpg.mp4`; inclua a pasta assets para ele funcionar.
+
+**IMPORTANTE:** Github Pages é um site estático. Para receber agendamentos reais, conectar o Supabase e operar o painel administrativo, publique o projeto COMPLETO na Vercel e configure a chave segura do backend. No Github Pages, o catálogo fica em modo de referência e os clientes podem chamar no WhatsApp enquanto a API não está disponível. Não coloque a chave `service_role` em `index.html` ou `config.js`.
+
+## Instruções originais da Vercel
+
 # Dom Ruiz 2.5 — CORREÇÃO DO GITHUB PAGES
 
 **Por que a tela apareceu branca?** O site antigo usava caminhos absolutos como `/style.css` e `/assets/logo.jpg.jpeg`. No GitHub Pages, com a URL `/dom-ruiz-teste/`, esses caminhos apontavam para a pasta errada. Corrigimos CSS, JS, imagens, vídeo, logo da faixa e links entre as páginas para caminhos relativos.
