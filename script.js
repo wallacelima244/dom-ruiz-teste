@@ -9,6 +9,7 @@ const prettyDate=s=>new Date(s+'T12:00:00Z').toLocaleDateString('pt-BR',{timeZon
 const localDate=(dt=new Date())=>new Intl.DateTimeFormat('en-CA',{timeZone:'America/Sao_Paulo',year:'numeric',month:'2-digit',day:'2-digit'}).format(dt);
 const icon=(name)=>`<svg aria-hidden="true"><use href="#i-${name}"></use></svg>`;
 const htmlEscape=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const assetPath=p=>typeof p==='string'&&p.startsWith('/assets/')?p.slice(1):p;
 async function api(action,options={}){
  const params=new URLSearchParams({action,...(options.params||{})});
  let r;try{r=await fetch(`${cfg.api}?${params}`,{method:options.body?'POST':'GET',headers:options.body?{'Content-Type':'application/json'}:{},body:options.body?JSON.stringify(options.body):undefined,cache:'no-store'});}catch{throw new Error('Sem conexão. Verifique a internet e tente novamente.');}
@@ -17,12 +18,12 @@ async function api(action,options={}){
 }
 let services=[],selected=null,date='',time='',lastBooking=null,offline=false,slotsRequestId=0;
 const fallbackServices=[
- {id:'preview-social',name:'Corte Social',description:'Clássico, alinhado e pronto para qualquer ocasião.',price:30,duration_min:25,image_path:'/assets/corte.social.jpg'},
- {id:'preview-tesoura',name:'Corte na Tesoura',description:'Acabamento natural com técnica e controle.',price:40,duration_min:40,image_path:'/assets/corte.na.tesoura.jpg'},
- {id:'preview-degrade',name:'Corte Degradê',description:'Transição suave e acabamento moderno.',price:35,duration_min:35,image_path:'/assets/degrade.jpg'},
- {id:'preview-barba',name:'Barba',description:'Modelagem e alinhamento no detalhe.',price:30,duration_min:20,image_path:'/assets/barba.jpg'},
- {id:'preview-sobrancelha',name:'Sobrancelha',description:'O detalhe que faz diferença.',price:10,duration_min:5,image_path:'/assets/sobrancelha.jpg'},
- {id:'preview-combo',name:'Corte + Barba',description:'Combo completo para um visual alinhado.',price:60,duration_min:55,image_path:'/assets/corte.barba.jpg'}
+ {id:'preview-social',name:'Corte Social',description:'Clássico, alinhado e pronto para qualquer ocasião.',price:30,duration_min:25,image_path:'assets/corte.social.jpg'},
+ {id:'preview-tesoura',name:'Corte na Tesoura',description:'Acabamento natural com técnica e controle.',price:40,duration_min:40,image_path:'assets/corte.na.tesoura.jpg'},
+ {id:'preview-degrade',name:'Corte Degradê',description:'Transição suave e acabamento moderno.',price:35,duration_min:35,image_path:'assets/degrade.jpg'},
+ {id:'preview-barba',name:'Barba',description:'Modelagem e alinhamento no detalhe.',price:30,duration_min:20,image_path:'assets/barba.jpg'},
+ {id:'preview-sobrancelha',name:'Sobrancelha',description:'O detalhe que faz diferença.',price:10,duration_min:5,image_path:'assets/sobrancelha.jpg'},
+ {id:'preview-combo',name:'Corte + Barba',description:'Combo completo para um visual alinhado.',price:60,duration_min:55,image_path:'assets/corte.barba.jpg'}
 ];
 const waLink=(msg)=>'https://wa.me/'+cfg.whatsapp+'?text='+encodeURIComponent(msg);
 function catalogNotice(message){const n=$('#catalogNotice');if(!n)return;n.hidden=!message;const t=n.querySelector('span');if(t)t.textContent=message;}
@@ -31,7 +32,7 @@ const track=$('#servicesTrack'),bookingServices=$('#bookingServices');
 function selectService(id){selected=services.find(s=>s.id===id)||null;$$('.choose-service').forEach(n=>n.classList.toggle('selected',n.dataset.id===id));$('#goDate').disabled=!selected||offline;}
 function createService(s,i){
  const card=el('article','service-card');
- const media=el('div','service-image');const img=el('img');img.src=s.image_path||'/assets/logo.jpg.jpeg';img.alt=s.name;img.loading='lazy';media.append(img);media.append(el('span','service-number',String(i+1).padStart(2,'0')+' / DOM RUIZ'));
+ const media=el('div','service-image');const img=el('img');img.src=assetPath(s.image_path)||'assets/logo.jpg.jpeg';img.alt=s.name;img.loading='lazy';media.append(img);media.append(el('span','service-number',String(i+1).padStart(2,'0')+' / DOM RUIZ'));
  const content=el('div','service-info');content.append(el('h3','',s.name),el('p','',s.description));
  const meta=el('div','service-meta');meta.append(el('strong','',money(s.price)),el('span','',s.duration_min+' min'));content.append(meta);
  const button=el(offline?'a':'button','service-book');
@@ -42,7 +43,7 @@ function createService(s,i){
 function renderServices(){track.replaceChildren();bookingServices.replaceChildren();services.forEach((s,i)=>{
  track.append(createService(s,i));
  const button=el('button','choose-service');button.type='button';button.dataset.id=s.id;
- const img=el('img');img.src=s.image_path||'/assets/logo.jpg.jpeg';img.alt='';
+ const img=el('img');img.src=assetPath(s.image_path)||'assets/logo.jpg.jpeg';img.alt='';
  const content=el('span');content.append(el('strong','',s.name),el('small','',money(s.price)+' · '+s.duration_min+' min'));
  const check=el('span','service-check');check.innerHTML=icon('check');
  button.append(img,content,check);button.disabled=offline;button.addEventListener('click',()=>selectService(s.id));bookingServices.append(button);

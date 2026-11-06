@@ -1,3 +1,20 @@
+# Dom Ruiz 2.5 — CORREÇÃO DO GITHUB PAGES
+
+**Por que a tela apareceu branca?** O site antigo usava caminhos absolutos como `/style.css` e `/assets/logo.jpg.jpeg`. No GitHub Pages, com a URL `/dom-ruiz-teste/`, esses caminhos apontavam para a pasta errada. Corrigimos CSS, JS, imagens, vídeo, logo da faixa e links entre as páginas para caminhos relativos.
+
+## Para corrigir agora
+
+1. Abra o ZIP e envie **todos os arquivos e a pasta `assets/`** para a raiz do repositório `dom-ruiz-teste`. Ao abrir o repositório, `index.html` e `style.css` devem aparecer juntos, e `assets/` como pasta ao lado deles.
+2. Confirme em **GitHub → Settings → Pages** que está publicando a branch e a pasta corretas (por exemplo, `main` / `(root)`).
+3. Acesse `https://wallacelima244.github.io/dom-ruiz-teste/` e atualize com **Ctrl + Shift + R** para ignorar a versão em cache.
+4. Abra `https://wallacelima244.github.io/dom-ruiz-teste/style.css` e `https://wallacelima244.github.io/dom-ruiz-teste/assets/logo.jpg.jpeg`. Ambas devem carregar diretamente no navegador.
+
+**Atenção:** GitHub Pages publica apenas arquivos estáticos. O visual e o catálogo de demonstração funcionarão, mas **GitHub Pages não executa `api/index.js`**, que é a API privada das reservas e do painel. Para agendamentos de verdade e login do Rodrigues, publique o mesmo repositório na **Vercel**, configure as variáveis de ambiente da API e teste a conexão do Supabase. Se a agenda estiver desconectada, o site oferece WhatsApp e nunca confirma uma reserva fictícia.
+
+**Não envie** `SUPABASE_SERVICE_ROLE_KEY` para GitHub nem para o navegador. Essa chave fica só nas variáveis de ambiente da Vercel. Mercado Souza não precisa de mudanças.
+
+---
+
 # Barbearia Dom Ruiz 2.4 | Logo ORIGINAL sem fundo branco
 
 Nesta versão, a faixa horizontal usa exatamente a logo original da Dom Ruiz (navalhas, bigode e nome), convertida para PNG transparente em `assets/logo-faixa-transparente.png`. Não foi desenhado nem substituído o símbolo da marca.

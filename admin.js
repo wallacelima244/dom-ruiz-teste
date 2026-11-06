@@ -1,6 +1,7 @@
 /* Dom Ruiz • Studio Manager. Sessão no navegador, permissões verificadas no servidor. */
 (() => {
   'use strict';
+  const assetPath=p=>typeof p==='string'&&p.startsWith('/assets/')?p.slice(1):p;
   const cfg = window.DOM_RUIZ_CONFIG || {api:'/api/index',supabaseUrl:'',supabasePublishableKey:''};
   const $ = (s) => document.querySelector(s);
   const $$ = (s) => [...document.querySelectorAll(s)];
@@ -211,7 +212,7 @@
     if(!services.length){area.innerHTML='<p class="empty">Nenhum serviço cadastrado.</p>';return;}
     services.forEach(s=>{
       const card=document.createElement('article');card.className='admin-service';
-      card.innerHTML=`<img loading="lazy" src="${escaped(s.image_path||'/assets/logo.jpg.jpeg')}" alt=""><div class="admin-service-body"><h3>${escaped(s.name)}</h3><p>${escaped(s.description||'')}<br>${s.duration_min} min · ${s.active?'Ativo':'Oculto no site'}</p><strong>${money(s.price)}</strong><button class="small-link" type="button">Editar serviço →</button></div>`;
+      card.innerHTML=`<img loading="lazy" src="${escaped(assetPath(s.image_path)||'assets/logo.jpg.jpeg')}" alt=""><div class="admin-service-body"><h3>${escaped(s.name)}</h3><p>${escaped(s.description||'')}<br>${s.duration_min} min · ${s.active?'Ativo':'Oculto no site'}</p><strong>${money(s.price)}</strong><button class="small-link" type="button">Editar serviço →</button></div>`;
       card.querySelector('button').addEventListener('click',()=>editService(s));area.append(card);
     });
   }
