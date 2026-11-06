@@ -1,3 +1,18 @@
+# Dom Ruiz | Correção do vídeo e foto do barbeiro
+
+Esta versão corrige **dois HTMLs ao mesmo tempo**:
+
+- `index.html` agora contém o vídeo otimizado (45 segundos, MP4/H.264/AAC), as fotos, a logo, o CSS e o JavaScript. A foto do Rodrigues tem ainda um fundo de segurança.
+- `admin.html` agora contém a foto do Rodrigues, a logo e o CSS/JS necessários para renderizar a tela de login, mesmo que os arquivos de mídia não sejam encontrados no GitHub Pages.
+
+**Para resolver no seu repositório GitHub Pages:** atualize os arquivos `index.html` **e** `admin.html` da raiz (ou substitua todo o conteúdo pelo pacote completo). Espere o Pages publicar a versão nova e faça `Ctrl + Shift + R`. O vídeo não precisa mais de uma pasta separada para funcionar nessas páginas.
+
+**Para Vercel:** publique o ZIP completo. O vídeo original continua em `assets/video.baber.jpg.mp4` como cópia de segurança, sem perda da versão fornecida. Você precisa configurar o backend da Vercel e o acesso do Rodrigues para fazer agendamentos reais. No GitHub Pages, o visual abre mas a API de agenda não funciona.
+
+Não coloque chaves secretas do Supabase no código público. O Mercado Souza não foi alterado.
+
+---
+
 # CORREÇÃO GITHUB PAGES | DOM RUIZ 2.6
 
 ## Para corrigir a tela branca SEM precisar atualizar 27 arquivos
