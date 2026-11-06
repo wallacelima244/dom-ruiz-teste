@@ -1,0 +1,130 @@
+# Barbearia Dom Ruiz 2.4 | Logo ORIGINAL sem fundo branco
+
+Nesta versão, a faixa horizontal usa exatamente a logo original da Dom Ruiz (navalhas, bigode e nome), convertida para PNG transparente em `assets/logo-faixa-transparente.png`. Não foi desenhado nem substituído o símbolo da marca.
+
+A logo é um pouco maior (110 × 50 px no computador; 78 × 36 px no celular), sem quadrado branco, sombra ou borda. A faixa mantém o movimento contínuo (11 segundos no desktop), com cópias iguais e sem buracos entre os ciclos.
+
+## Publicar
+
+- Para atualizar apenas a faixa, envie `index.html`, `style.css` **e** `assets/logo-faixa-transparente.png`, respeitando a pasta assets.
+- Para substituir tudo, use o ZIP completo no repositório GitHub da Dom Ruiz.
+- Não altere as variáveis de ambiente da Vercel nem o Supabase. Esta correção é apenas visual e funciona mesmo com o banco desconectado.
+
+---
+
+# DOM RUIZ 2.3 | LOGO ORIGINAL + FAIXA MAIS RÁPIDA
+
+**Alterado:** na faixa azul, o asterisco foi substituído pela logo original da Dom Ruiz. A faixa agora desliza continuamente e mais rápido (11 s no computador, 15 s no celular), sem deixar espaços vazios na passagem do conteúdo. A animação funciona apenas com HTML/CSS, sem conexão ao Supabase.
+
+**Como atualizar:** extraia este ZIP e substitua todos os arquivos do projeto no GitHub da Dom Ruiz. Ou use o pacote separado com somente `index.html` e `style.css` se quiser atualizar apenas a faixa. Não altere as variáveis privadas que já estejam configuradas na Vercel. Aguarde a publicação do novo deploy; se o navegador mostrar o visual antigo, atualize com Ctrl+F5.
+
+**Atenção:** este ZIP não publica o site sozinho. A agenda e o painel continuam dependendo da configuração da API e do Supabase na Vercel, conforme as instruções completas abaixo.
+
+---
+
+# DOM RUIZ 2.2 | FAIXA ANIMADA CORRIGIDA
+
+**Correção:** a faixa azul (PRECISÃO · PERSONALIDADE · PRESENÇA · DOM RUIZ) agora desliza continuamente para a esquerda, com repetição sem salto. A animação é só HTML/CSS e não depende do Supabase.
+
+**Para atualizar no GitHub:** substitua todos os arquivos do projeto pelos deste ZIP, preservando as configurações de ambiente já feitas na Vercel. Se desejar corrigir apenas a faixa, substitua somente `index.html` e `style.css`. No painel da Vercel, confirme que o novo deploy foi publicado. Para verificar, atualize a página com Ctrl+F5 no Windows.
+
+---
+
+# Dom Ruiz 2.1 — revisão e diagnóstico rápido
+
+**Corrigido nesta versão:** o catálogo agora exibe os seis serviços com as fotos originais mesmo se a API ainda não estiver configurada. Enquanto o backend não responder, o agendamento próprio não simula uma reserva e oferece WhatsApp para contato. Foram melhorados o retorno de erro, o carregamento de horários e o tratamento da sessão administrativa.
+
+**Teste mais rápido para descobrir o que falta:** após publicar na Vercel, abra `https://SEU-SITE.vercel.app/api/index?action=health` no navegador.
+
+- Se aparecer `{"ok":true,"database":"connected"}`, a API está conectada ao Supabase.
+- Se aparecer `reason: "missing_server_key"`, falta configurar a variável privada `SUPABASE_SERVICE_ROLE_KEY` **somente na Vercel**.
+- Se aparecer `reason: "database_connection"`, confira a URL do projeto e a chave privada na Vercel e faça Redeploy.
+
+O login do Rodrigues **também precisa ser criado em Authentication → Users** e seu usuário autorizado em `public.admin_users`, conforme explicado abaixo. Sem essas configurações, as telas existem mas não devem ser tratadas como prontas para receber reservas reais.
+
+---
+
+# BARBEARIA DOM RUIZ — SITE + AGENDA PRÓPRIA + PAINEL
+
+Projeto independente do Mercado Souza. Feito com HTML, CSS e JavaScript no site, funções de servidor da Vercel e banco Supabase exclusivo da Dom Ruiz.
+
+## O que já está preparado
+
+- **Site (`index.html`)** com visual renovado, fotos e vídeo originais, catálogo com valores e durações, localização, Instagram, WhatsApp e avaliação no Google.
+- **Agendamento dentro do próprio site**: escolha de serviço, data, horário livre, nome e WhatsApp. Clientes não precisam criar conta. A reserva é salva no Supabase; o WhatsApp é um contato adicional, não substitui a reserva.
+- **Painel (`admin.html`)** com login, visão geral, faturamento de atendimentos marcados como concluídos, agenda, reagendamentos, cancelamentos, faltas, bloqueios de horário, clientes, WhatsApp, serviços, preços, fotos, horários e exportação CSV.
+- **Proteção no banco** para impedir intervalos de reserva sobrepostos, mesmo se duas pessoas tentarem reservar quase ao mesmo tempo.
+
+**Importante:** o banco de dados já foi criado, testado e recebeu os seis serviços e os horários iniciais. O site ainda precisa ser publicado na Vercel e receber a chave privada em uma variável de ambiente. **Não está publicado nem pronto para reservas reais até concluir os passos abaixo.**
+
+## 1. Publique os arquivos sem alterar a estrutura
+
+No VS Code, abra esta pasta inteira (`dom_ruiz_site`). Envie **todos** os arquivos e a pasta `assets/` para um repositório GitHub. No painel da [Vercel](https://vercel.com/), crie um projeto a partir do repositório. Framework Preset: **Other**. Root Directory: a pasta que contém `index.html`, `admin.html`, `api/`, `vercel.json` e `assets/`. Não configure comando de build.
+
+A aplicação usa as URLs `/` (site), `/admin.html` (painel), `/api/index?action=services` (catálogo) e demais ações `/api/index`.
+
+## 2. Configure a Vercel com segurança
+
+Abra **Vercel → Projeto Dom Ruiz → Settings → Environment Variables**. Configure as três variáveis abaixo nos ambientes em que vai publicar:
+
+| Nome | Valor |
+|---|---|
+| `SUPABASE_URL` | `https://bysxwsoiyxsflildpznf.supabase.co` |
+| `SUPABASE_PUBLISHABLE_KEY` | `sb_publishable_BsTF4RNQ3wBSymPDG3ApFg_6dzDRHSZ` |
+| `SUPABASE_SERVICE_ROLE_KEY` | Copie a **chave privada service_role** do projeto Dom Ruiz no Supabase |
+
+Para obter a chave secreta: abra **[Supabase → projeto Dom Ruiz](https://supabase.com/dashboard/project/bysxwsoiyxsflildpznf/settings/api-keys)**, procure **Legacy API Keys → service_role**. Dependendo da interface, pode ser necessário habilitar/exibir a chave legada. **Nunca copie essa chave para o GitHub, HTML, JS do navegador, `config.js` ou WhatsApp**. Somente a Vercel pode guardá-la como variável secreta de servidor. A chave publishable presente no site é pública por definição.
+
+Salve e faça um **Redeploy** do projeto na Vercel. A configuração em `config.js` já contém apenas dados públicos do projeto Dom Ruiz e não precisa ser preenchida.
+
+## 3. Crie o login do Rodrigues
+
+1. No projeto Dom Ruiz, vá a **Supabase → Authentication → Users → Add user**.
+2. Crie um usuário com **o e-mail do Rodrigues e uma senha forte definida por ele**. Marque a confirmação de e-mail se a interface oferecer essa opção para um usuário criado pelo administrador.
+3. Abra **SQL Editor → New query** no projeto Dom Ruiz. Cole o SQL abaixo, **trocando `EMAIL_DO_RODRIGUES` pelo e-mail criado**:
+
+```sql
+insert into public.admin_users (user_id)
+select id
+from auth.users
+where lower(email) = lower('EMAIL_DO_RODRIGUES')
+on conflict (user_id) do nothing;
+```
+
+4. Clique em **Run**. Entre no painel pelo endereço `https://seu-site.vercel.app/admin.html` com esse e-mail e senha. **Não publique essas credenciais no código ou neste chat.**
+
+Só os usuários que estiverem na tabela privada `admin_users` conseguem usar o painel, mesmo se outra pessoa fizer login no Supabase.
+
+## 4. Confira antes de entregar ao cliente
+
+1. Abra o site e confira se os seis serviços carregam com fotos e preços.
+2. Escolha um serviço, dia e horário; preencha nome e WhatsApp e confirme uma reserva de teste.
+3. Entre no painel e confira se a reserva aparece na agenda do dia.
+4. Tente reservar **o mesmo horário** em outra aba: deve aparecer indisponível.
+5. No painel, conclua o atendimento de teste e confirme a atualização dos indicadores de faturamento.
+6. Teste bloqueio de horário, alteração de preço e mudança de expediente. O site deve refletir os dados atualizados.
+7. Cancele a reserva de teste ou elimine os registros de teste no painel. Faça testes de celular e computador.
+
+## Atenção com a operação
+
+- Para evitar agendas em conflito, **pare de receber reservas no InBarber/BestBarbers quando a agenda própria entrar em produção** ou migre os horários existentes antes de abrir o novo site.
+- O WhatsApp não envia mensagens automaticamente: o botão prepara uma mensagem, e a pessoa escolhe enviá-la. Mensagens automáticas exigem integração adicional aprovada.
+- O formulário salva nome e WhatsApp, por isso há aviso de finalidade. Publique também um canal para solicitações sobre dados de clientes.
+- Proteções de base (checagem de sobreposição, honeypot e limite simples por telefone) foram incluídas. Para alto volume ou abuso, configure proteção adicional contra bots/rate limiting na Vercel/Cloudflare.
+- Sem senha de admin e sem a variável secreta de servidor, **a API não confirma agendamentos reais**. Não substitua valores do site por resultados fictícios.
+- Serviço de hospedagem e Supabase podem ter limites de uso conforme os planos gratuitos. O Supabase Free pode pausar projetos com baixa atividade.
+
+## Estrutura
+
+```text
+index.html, style.css, script.js    Site público e agendamento
+admin.html, admin.css, admin.js     Painel administrativo
+config.js                          Configuração pública
+api/index.js                       API privada executada na Vercel
+assets/                            Fotos, logo e vídeo originais
+sql/schema.sql                     Cópia do SQL inicial, já aplicado no banco
+vercel.json                        Cabeçalhos de segurança
+.env.example                       Exemplo sem segredos
+```
+
+**Nunca rode novamente `sql/schema.sql` em outro projeto Supabase por engano.** Ele está incluído para documentar a estrutura criada, não é necessário executá-lo na Dom Ruiz.
